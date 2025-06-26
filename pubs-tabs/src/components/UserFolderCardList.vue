@@ -40,8 +40,7 @@
 
 <script>
 import UserFolderCard from './UserFolderCard.vue';
-import axios from 'axios';
-const api = process.env.VUE_APP_API_BASE_URL;
+import { addUser, updateUser, deleteUser } from '@/services/UserService.js';
 export default {
   components: { UserFolderCard },
   props: {
@@ -77,11 +76,11 @@ export default {
       const newUserData = {
         ...this.newUser,
         username: this.newUser.name.toLowerCase().replace(/\s+/g, ''),
-        punches: [ false, false, false, false, false, false, false, false, false, false ]
+        punches: Array(10).fill(false)
       };
 
       try {
-        await axios.post(`${api}/users`, newUserData);
+        await addUser(newUserData);
         this.showModal = false;
         this.newUser.name = '';
         this.newUser.phone = '';
@@ -93,7 +92,7 @@ export default {
 
     async handleUpdateUser(updatedUser) {
       try {
-        await axios.patch(`${api}/users/${updatedUser.id}`, updatedUser);
+        await updateUser(updatedUser.id, updatedUser);
         this.$emit('refresh');
       } catch (err) {
         console.error('Update failed:', err);
@@ -101,7 +100,7 @@ export default {
     },
     async handleDeleteUser(userId) {
       try {
-        await axios.delete(`${api}/users/${userId}`);
+        await deleteUser(userId);
         this.$emit('refresh');
       } catch (err) {
         console.error('Delete failed:', err);
