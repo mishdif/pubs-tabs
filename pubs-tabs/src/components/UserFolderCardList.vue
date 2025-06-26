@@ -47,7 +47,8 @@ export default {
   props: {
     users: {
         type: Array,
-        required: true
+        required: true,
+        default: () => []
     }
   },
   emits: ["refresh"],
@@ -63,6 +64,7 @@ export default {
   },
   computed: {
     filteredUsers() {
+      if (!this.users || !Array.isArray(this.users)) return [];
       const query = this.searchQuery.trim().toLowerCase();
       if (!query) return this.users;
       return this.users.filter(user =>

@@ -11,7 +11,7 @@
     <!-- <div class="content" v-if="expanded"> -->
       <div class="card-body">
         <div class="info">
-          <p style="color: #aaa;"><strong>ID:</strong> {{ user.id }}</p>
+          <!-- <p style="color: #aaa;"><strong>ID:</strong> {{ user.id }}</p> -->
           <p><strong>Phone:</strong></p>
           <p>{{ user.phone }}</p>
           <!-- <p><strong>Username:</strong> {{ user.username }}</p> -->

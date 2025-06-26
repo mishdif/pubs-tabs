@@ -8,7 +8,7 @@
     <UserFolderCardList 
       :users="users"
       @update-punches="handlePunchChange"
-      @refresh="fetchUsers"
+      @refresh="created"
     />
   </main>
 </template>
@@ -16,6 +16,7 @@
 <script>
 import axios from 'axios';
 const api = process.env.VUE_APP_API_BASE_URL;
+import { fetchUsers } from '@/services/UserService.js';
 import UserFolderCardList from './components/UserFolderCardList.vue';
 import TopHeader from './components/TopHeader.vue';
 export default {
@@ -32,16 +33,16 @@ export default {
     }
   },
   mounted() {
-  this.fetchUsers();
+  this.created();
 },
   methods: {
-    async fetchUsers() {
+    async created() {
       this.loading = true;
       this.error = null;
 
       try {
-        const response = await axios.get(`${api}/users`);
-        this.users = response.data;
+        this.users = await fetchUsers();
+        console.log(this.users);
       } catch (err) {
         this.error = err.message || 'Failed to fetch users';
       } finally {
