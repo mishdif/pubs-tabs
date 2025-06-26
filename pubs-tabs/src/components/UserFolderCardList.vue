@@ -50,7 +50,6 @@ export default {
         default: () => []
     }
   },
-  emits: ["refresh"],
   data() {
     return {
       searchQuery: '',
@@ -84,7 +83,6 @@ export default {
         this.showModal = false;
         this.newUser.name = '';
         this.newUser.phone = '';
-        this.$emit('refresh'); // ask App.vue to refetch users
       } catch (err) {
         console.error('Failed to add user:', err);
       }
@@ -93,7 +91,6 @@ export default {
     async handleUpdateUser(updatedUser) {
       try {
         await updateUser(updatedUser.id, updatedUser);
-        this.$emit('refresh');
       } catch (err) {
         console.error('Update failed:', err);
       }
@@ -101,7 +98,6 @@ export default {
     async handleDeleteUser(userId) {
       try {
         await deleteUser(userId);
-        this.$emit('refresh');
       } catch (err) {
         console.error('Delete failed:', err);
       }

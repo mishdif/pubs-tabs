@@ -1,11 +1,17 @@
 // src/services/UserService.js
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot } from 'firebase/firestore';
 import { db } from '@/firebase';
 
-// Fetch all users
-export async function fetchUsers() {
-  const snapshot = await getDocs(collection(db, 'users'));
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+export function listenToUsers(callback, errorCallback) {
+  const usersRef = collection(db, 'users');
+  return onSnapshot(
+    usersRef,
+    (snapshot) => {
+      const users = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      callback(users);
+    },
+    errorCallback
+  );
 }
 
 // Add new user
