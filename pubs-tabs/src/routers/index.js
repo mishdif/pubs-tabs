@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-// import LoginPage from '@/views/LoginPage.vue';
-import HomePage from '@/App.vue';
+import LoginPage from '@/views/LoginPage.vue';
+import HomePage from '@/views/HomePage.vue';
 
 const routes = [
   {
@@ -9,11 +9,11 @@ const routes = [
     component: HomePage,
     meta: { requiresAuth: true }
   },
-//   {
-//     path: '/login',
-//     name: 'Login',
-//     component: LoginPage
-//   }
+  {
+    path: '/login',
+    name: 'Login',
+    component: LoginPage
+  }
 ];
 
 const router = createRouter({
