@@ -1,24 +1,25 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginPage from '@/views/LoginPage.vue';
 import HomePage from '@/views/HomePage.vue';
+import { auth } from '@/firebase';
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: HomePage,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: LoginPage
-  }
+  { path: '/', component: HomePage, meta: { requiresAuth: true } },
+  { path: '/login', component: LoginPage }
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  const user = auth.currentUser;
+  if (to.meta.requiresAuth && !user) {
+    next('/login');
+  } else {
+    next();
+  }
 });
 
 export default router;

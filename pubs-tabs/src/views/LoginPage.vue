@@ -1,25 +1,27 @@
 <template>
-  <div class="login-page">
-    <h2>Login</h2>
-    <form @submit.prevent="login">
-      <input v-model="email" type="email" placeholder="Email" required />
-      <input v-model="password" type="password" placeholder="Password" required />
-      <button type="submit">Login</button>
-      <p v-if="error" class="error">{{ error }}</p>
-    </form>
-  </div>
+  <main>
+    <div class="login-page">
+      <h2>Login</h2>
+      <form @submit.prevent="login">
+        <input v-model="email" type="email" placeholder="Email" required />
+        <input v-model="password" type="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+        <p v-if="error" class="error">{{ error }}</p>
+      </form>
+    </div>
+  </main>
 </template>
 
 <script>
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@/firebase'; // your firebase.js
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/firebase";
 
 export default {
   data() {
     return {
       email: '',
       password: '',
-      error: ''
+      error: null
     };
   },
   methods: {
@@ -36,6 +38,12 @@ export default {
 </script>
 
 <style scoped>
+:root {
+  --header-height: 160px;
+}
+main {
+  padding-top: var(--header-height);
+}
 .login-page {
   max-width: 400px;
   margin: 100px auto;
@@ -47,7 +55,7 @@ export default {
 input {
   display: block;
   width: 100%;
-  margin: 10px 0;
+  margin: 10px 0px;
   padding: 10px;
 }
 .error {
