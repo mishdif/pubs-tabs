@@ -5,6 +5,8 @@
       <form @submit.prevent="register">
         <input v-model="email" type="email" placeholder="Email" required />
         <input v-model="password" type="password" placeholder="Password" required />
+        <input v-model="name" placeholder="Name" required />
+        <input v-model="phone" placeholder="Phone" required />
         <button type="submit">Register</button>
         <p class="error" v-if="error">{{ error }}</p>
         <p>Already have an account? <router-link to="/login">Log in</router-link></p>
@@ -15,6 +17,7 @@
 
 <script>
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserProfile } from '@/services/UserService';
 import { auth } from '@/firebase'; // Make sure you have firebase initialized in this file
 
 export default {
@@ -23,15 +26,28 @@ export default {
     return {
       email: '',
       password: '',
+      name: '',
+      phone: '',
       error: ''
     };
   },
   methods: {
-    async register() {
-      this.error = '';
-      try {
-        await createUserWithEmailAndPassword(auth, this.email, this.password);
-        this.$router.push('/'); // Redirect to home or wherever you want
+  async register() {
+    this.error = '';
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, this.email, this.password);
+      const user = userCredential.user;
+
+      await createUserProfile(user.uid, {
+        email: user.email,
+        role: 'user',
+        name: this.name,
+        phone: this.phone,
+        punches: Array(10).fill(false),
+        createdAt: new Date()
+        });
+
+        this.$router.push('/');
       } catch (err) {
         this.error = err.message;
       }

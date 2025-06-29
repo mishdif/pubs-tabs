@@ -1,5 +1,5 @@
 // src/services/UserService.js
-import { collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { db } from '@/firebase';
 
 export function listenToUsers(callback, errorCallback) {
@@ -29,4 +29,10 @@ export async function updateUser(id, updatedData) {
 export async function deleteUser(id) {
   const userRef = doc(db, 'users', id);
   return await deleteDoc(userRef);
+}
+
+// Create user document with UID as ID
+export async function createUserProfile(uid, userData) {
+  const userRef = doc(db, 'users', uid); // UID as the document ID
+  return await setDoc(userRef, userData); // setDoc instead of addDoc
 }
