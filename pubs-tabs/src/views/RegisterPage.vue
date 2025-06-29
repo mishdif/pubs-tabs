@@ -47,7 +47,6 @@ export default {
 main {
   padding-top: var(--header-height);
 }
-
 .auth-container {
   max-width: 400px;
   margin: auto;
@@ -62,6 +61,7 @@ input {
   margin-bottom: 16px;
   width: 100%;
   padding: 10px;
+  box-sizing: border-box;
 }
 button {
   width: 100%;
@@ -74,5 +74,8 @@ button {
 .error {
   color: red;
   margin-top: 10px;
+}
+a {
+  color: rgb(147, 224, 255);
 }
 </style>
