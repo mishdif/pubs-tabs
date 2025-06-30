@@ -38,18 +38,30 @@ export default {
       confirmationResult: null
     };
   },
+  beforeUnmount() {
+    if (window.recaptchaVerifier) {
+      window.recaptchaVerifier.clear();
+      window.recaptchaVerifier = null;
+    }
+  },
   methods: {
     async sendCode() {
       this.error = '';
       try {
-        const verifier = new RecaptchaVerifier('recaptcha-container', {
-          size: 'invisible'
-        }, auth);
+        if (!window.recaptchaVerifier) {
+          window.recaptchaVerifier = new RecaptchaVerifier(
+            'recaptcha-container',
+            { size: 'invisible' },
+            auth
+          );
+        }
 
+        const verifier = window.recaptchaVerifier;
         this.confirmationResult = await signInWithPhoneNumber(auth, this.phone, verifier);
         this.codeSent = true;
       } catch (err) {
         this.error = err.message;
+        console.error('sendCode error:', err);
       }
     },
     async verifyCode() {
