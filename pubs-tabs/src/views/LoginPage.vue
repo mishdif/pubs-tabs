@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
+import { getAuth, signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
 import { createUserProfile } from '@/services/UserService';
 import { auth } from "@/firebase";
 
@@ -33,6 +33,12 @@ export default {
       codeSent: false,
       confirmationResult: null
     };
+  },
+  mounted() {
+    const auth = getAuth();
+    window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+      size: 'invisible'
+    }, auth);
   },
   beforeUnmount() {
     if (window.recaptchaVerifier) {
