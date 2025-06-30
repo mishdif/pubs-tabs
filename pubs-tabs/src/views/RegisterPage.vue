@@ -2,49 +2,67 @@
   <main>
     <div class="auth-container">
       <h2>Register</h2>
-      <form @submit.prevent="register">
-        <input v-model="email" type="email" placeholder="Email" required />
-        <input v-model="password" type="password" placeholder="Password" required />
+
+      <form @submit.prevent="sendCode" v-if="!codeSent">
         <input v-model="name" placeholder="Name" required />
-        <input v-model="phone" placeholder="Phone" required />
-        <button type="submit">Register</button>
-        <p class="error" v-if="error">{{ error }}</p>
-        <p>Already have an account? <router-link to="/login">Log in</router-link></p>
+        <input v-model="phone" placeholder="+1234567890" required />
+        <div id="recaptcha-container"></div>
+        <button type="submit">Send Code</button>
       </form>
+
+      <form @submit.prevent="verifyCode" v-else>
+        <input v-model="otp" placeholder="Enter OTP" required />
+        <button type="submit">Verify</button>
+      </form>
+
+      <p class="error" v-if="error">{{ error }}</p>
+      <p>Already have an account? <router-link to="/login">Log in</router-link></p>      
     </div>
   </main>
 </template>
 
 <script>
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
 import { createUserProfile } from '@/services/UserService';
-import { auth } from '@/firebase'; // Make sure you have firebase initialized in this file
+import { auth } from "@/firebase";
 
 export default {
   name: 'RegisterPage',
   data() {
     return {
-      email: '',
-      password: '',
       name: '',
       phone: '',
-      error: ''
+      otp: '',
+      error: '',
+      codeSent: false,
+      confirmationResult: null
     };
   },
   methods: {
-  async register() {
-    this.error = '';
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, this.email, this.password);
-      const user = userCredential.user;
+    async sendCode() {
+      this.error = '';
+      try {
+        const verifier = new RecaptchaVerifier('recaptcha-container', {
+          size: 'invisible'
+        }, auth);
 
-      await createUserProfile(user.uid, {
-        email: user.email,
-        role: 'user',
-        name: this.name,
-        phone: this.phone,
-        punches: Array(10).fill(false),
-        createdAt: new Date()
+        this.confirmationResult = await signInWithPhoneNumber(auth, this.phone, verifier);
+        this.codeSent = true;
+      } catch (err) {
+        this.error = err.message;
+      }
+    },
+    async verifyCode() {
+      try {
+        const result = await this.confirmationResult.confirm(this.otp);
+        const user = result.user;
+
+        await createUserProfile(user.uid, {
+          name: this.name,
+          phone: this.phone,
+          role: 'user',
+          punches: Array(10).fill(false),
+          createdAt: new Date()
         });
 
         this.$router.push('/');
