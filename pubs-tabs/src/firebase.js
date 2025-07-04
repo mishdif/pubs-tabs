@@ -7,12 +7,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBHgbyYVlW1ikzMAcnnIdKqhgwVnuYqxJ4",
-  authDomain: "pubs-tabs.firebaseapp.com",
-  projectId: "pubs-tabs",
-  storageBucket: "pubs-tabs.firebasestorage.app",
-  messagingSenderId: "883768752530",
-  appId: "1:883768752530:web:adb38690bad6d21debe94b"
+  apiKey: "AIzaSyBhGphKr-sFqqJdFC8t8rGSTZMUXqpb81U",
+  authDomain: "pubs-tabs-dev.firebaseapp.com",
+  projectId: "pubs-tabs-dev",
+  storageBucket: "pubs-tabs-dev.firebasestorage.app",
+  messagingSenderId: "310701373935",
+  appId: "1:310701373935:web:800a7f69edf822196fde1a"
 };
 
 // Initialize Firebase
