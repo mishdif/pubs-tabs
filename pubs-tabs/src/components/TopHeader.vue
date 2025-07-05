@@ -1,13 +1,36 @@
 <template>
     <div class="top-header">
-        <img class="icon" alt="Beer logo" src="../assets/beers-icon.png">
+        <img class="icon" alt="Beer logo" src="@/assets/beers-icon.png">
         <div>PUB'S TABS</div>
+    </div>
+    <div v-if="user" class="auth-bar">
+      Logged in as: {{ user.email }}
+      <button @click="logout">Logout</button>
     </div>
 </template>
 
 <script>
+import { auth } from '@/firebase';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+
 export default {
-    name: "TopHeader"
+  name: "TopHeader",
+  data() {
+    return {
+      user: null
+    };
+  },
+  created() {
+    onAuthStateChanged(auth, (user) => {
+      this.user = user;
+    });
+  },
+  methods: {
+    async logout() {
+      await signOut(auth);
+      this.$router.push('/login');
+    }
+  }
 }
 </script>
 
@@ -33,5 +56,20 @@ export default {
     width: 78px;
     height: 78px;
     padding: 16px;
+}
+.auth-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #222;
+  color: white;
+  padding: 10px 20px;
+}
+.auth-bar button {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
 }
 </style>

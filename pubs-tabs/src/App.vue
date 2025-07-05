@@ -1,12 +1,12 @@
 <template>
   <header>
-    <TopHeader class="top-header"/>    
+    <TopHeader class="top-header"/>
   </header>
   <router-view />
 </template>
 
 <script>
-import TopHeader from './components/TopHeader.vue';
+import TopHeader from '@/components/TopHeader.vue';
 export default {
   name: 'App',
   components: {
