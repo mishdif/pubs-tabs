@@ -68,14 +68,16 @@ export default {
   align-items: center;
   background: #343434;
   color: white;
-  padding: 10px 20px;
+  padding: 12px 12px;
 }
 .auth-bar button {
   background: #e74c3c;
   color: white;
   border: none;
-  padding: 6px 12px;
+  padding: 10px 22px;
   border-radius: 4px;
-  margin: 8px;
+  margin: 10px;
+  font-weight: bolder;
+  font-size: large;
 }
 </style>
