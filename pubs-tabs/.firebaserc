@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "pubs-tabs"
-  }
+    "default": "pubs-tabs-dev",
+    "prod": "pubs-tabs",
+    "dev": "pubs-tabs-dev"
+  },
+  "targets": {},
+  "etags": {}
 }
