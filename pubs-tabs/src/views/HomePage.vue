@@ -1,6 +1,5 @@
 <template>
   <main>
-    <div v-if="error" class="users-error">Error getting users: {{ error }}</div>
     <UserFolderCardList 
       :users="users"
       @update-punches="handlePunchChange"
