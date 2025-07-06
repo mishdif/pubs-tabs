@@ -1,4 +1,3 @@
-<!-- src/views/LoginPage.vue -->
 <template>
   <main>
     <div class="auth-container">
@@ -31,7 +30,7 @@ export default {
       this.error = '';
       try {
         await signInWithEmailAndPassword(auth, this.email, this.password);
-        this.$router.push('/'); // Go to homepage after login
+        this.$router.push('/');
       } catch (err) {
         this.error = err.message;
       }
@@ -41,11 +40,8 @@ export default {
 </script>
 
 <style scoped>
-:root {
-  --header-height: 160px;
-}
 main {
-  padding-top: var(--header-height);
+  padding-top: 130px;
 }
 .auth-container {
   max-width: 400px;

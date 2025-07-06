@@ -1,7 +1,5 @@
 <template>
-  <header>
-    <TopHeader class="top-header"/>
-  </header>
+  <TopHeader class="top-header"/>
   <router-view />
 </template>
 
@@ -16,16 +14,10 @@ export default {
 </script>
 
 <style>
-:root {
-  --header-height: 160px;
-}
-header {
+.top-header {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: var(--header-height);
-  z-index: 1000; /* to keep it above other elements */
 }body::before {
   content: "";
   position: fixed;
@@ -37,7 +29,7 @@ header {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  z-index: -1; /* Push it behind everything */
+  z-index: -1;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

@@ -1,9 +1,6 @@
 <template>
-  <header>
-    <div v-if="loading">Loading users...</div>
-    <div v-else-if="error">Error getting users: {{ error }}</div>
-  </header>
   <main>
+    <div v-if="error" class="users-error">Error getting users: {{ error }}</div>
     <UserFolderCardList 
       :users="users"
       @update-punches="handlePunchChange"
@@ -45,6 +42,7 @@ export default {
         },
         (err) => {
           this.error = err.message || 'Failed to fetch users';
+          console.error(`Error loading users: ${this.errorr}`)
           this.loading = false;
         }
       );
@@ -63,21 +61,9 @@ export default {
 
 <style>
 :root {
-  --header-height: 160px;
-}
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: var(--header-height);
-  z-index: 1000; /* to keep it above other elements */
+  --header-height: 130px
 }
 main {
-  padding-top: var(--header-height);
+  margin-top: var(--header-height);
 }
-/* .tabs-list {
-  margin-top: 100px;
-  margin-bottom: 100px;
-} */
 </style>

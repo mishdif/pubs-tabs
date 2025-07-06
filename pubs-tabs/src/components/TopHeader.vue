@@ -1,11 +1,13 @@
 <template>
-    <div class="top-header">
-        <img class="icon" alt="Beer logo" src="@/assets/beers-icon.png">
-        <div>PUB'S TABS</div>
-    </div>
-    <div v-if="user" class="auth-bar">
-      Logged in as: {{ user.email }}
-      <button @click="logout">Logout</button>
+    <div v-if="true" class="top-header">
+        <div class="headline">
+            <img class="icon" alt="Beer logo" src="@/assets/beers-icon.png">
+            <div>PUB'S TABS</div>
+        </div>
+        <div v-if="user" class="auth-bar">
+          <button @click="logout">Logout</button>
+          {{ user.email }}
+        </div>
     </div>
 </template>
 
@@ -37,31 +39,34 @@ export default {
 <style>
 .top-header {
     background-color: #343434;
-    overflow: hidden;
     color: white;
     float: left;
     width: 100%;
     display: flex;
+    justify-content: space-between;
     box-shadow: 0px 10px 10px 10px rgb(0, 0, 0, 0.78);
-    margin-bottom: 32px;
+    z-index: 1000;
 }
 .top-header div {
-    padding-top: 32px;
+    padding: 16px;
     font-stretch: extra-condensed;
     font-weight: bolder;
     color: white;
-    font-size: 36px;
+    font-size: 30px;
+}
+.headline {
+    display: flex;
 }
 .icon {
-    width: 78px;
-    height: 78px;
-    padding: 16px;
+    width: 60px;
+    height: 60px;
+    padding: 4px;
 }
 .auth-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #222;
+  background: #343434;
   color: white;
   padding: 10px 20px;
 }
@@ -71,5 +76,6 @@ export default {
   border: none;
   padding: 6px 12px;
   border-radius: 4px;
+  margin: 8px;
 }
 </style>
